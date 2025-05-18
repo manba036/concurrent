@@ -61,10 +61,10 @@ class WebapiWorker:
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.num_of_workers) as executor:
             futures = [executor.submit(self._process_task, task_function, settings, task_index, task_info) for task_index, task_info in enumerate(task_info_list)]
 
-            # 全タスクの完了待ち
+            # Waiting for all tasks to complete
             executor.shutdown(wait=True)
 
-            # 全タスクの結果取得
+            # Get all task results
             results = [future.result() for future in futures]
 
         end_time = time.time()
